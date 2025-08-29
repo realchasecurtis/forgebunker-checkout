@@ -10,7 +10,7 @@
   function getCartFromQuery() {
     const params = new URLSearchParams(window.location.search);
     const cart = params.get("cart");
-    return cart ? JSON.parse(decodeURIComponent(cart)) : [];
+    return cart ? JSON.parse(cart) : [];
   }
 
   async function checkout() {
