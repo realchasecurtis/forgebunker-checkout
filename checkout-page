@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Checkout</title>
+</head>
+<body>
+  <h1>Processing your cart...</h1>
+  <script>
+  async function checkout() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    if (!cart.length) {
+      document.body.innerHTML = "<h2>Your cart is empty.</h2>";
+      return;
+    }
+
+    // Send cart to backend API
+    const res = await fetch("/api/create-checkout-session", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ cart })
+    });
+
+    const data = await res.json();
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      document.body.innerHTML = "<h2>Error creating checkout session.</h2>";
+    }
+  }
+
+  checkout();
+  </script>
+</body>
+</html>
