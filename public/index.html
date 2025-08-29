@@ -5,9 +5,16 @@
 </head>
 <body>
   <h1>Processing your cart...</h1>
+
   <script>
+  function getCartFromQuery() {
+    const params = new URLSearchParams(window.location.search);
+    const cart = params.get("cart");
+    return cart ? JSON.parse(decodeURIComponent(cart)) : [];
+  }
+
   async function checkout() {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cart = getCartFromQuery();
 
     if (!cart.length) {
       document.body.innerHTML = "<h2>Your cart is empty.</h2>";
